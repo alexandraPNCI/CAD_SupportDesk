@@ -1,8 +1,12 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
-
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
   before_action :authorize_ticket!, only: [:edit, :update, :destroy]
+
+  def index
+    @tickets = Ticket.all      # FIX: removed pagy
+    authorize @tickets
+  end
 
   def show
     authorize @ticket
@@ -15,7 +19,7 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(ticket_params)
-    @ticket.user = current_user  # FIX: assign current user
+    @ticket.user = current_user
     authorize @ticket
 
     if @ticket.save
