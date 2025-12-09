@@ -5,8 +5,9 @@ class TicketsController < ApplicationController
   before_action :authorize_ticket!, only: [:edit, :update, :destroy]
 
   def index
-    @tickets = policy_scope(Ticket)
-  end
+  @pagy, @tickets = pagy(policy_scope(Ticket).order(created_at: :desc))
+end
+
 
   def show
     authorize @ticket

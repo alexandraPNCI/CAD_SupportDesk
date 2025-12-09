@@ -29,6 +29,8 @@ gem "tzinfo-data"
 #gem "solid_queue"
 #gem "solid_cable"
 
+gem 'pagy'
+
 gem "pundit"
 
 # Reduces boot times through caching; required in config/boot.rb
