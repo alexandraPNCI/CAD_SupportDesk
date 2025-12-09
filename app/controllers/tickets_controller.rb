@@ -1,52 +1,55 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_ticket, only: %i[show edit update destroy]
 
   def index
-    @tickets = current_user.tickets.order(created_at: :desc)
+    @tickets = Ticket.all
+    authorize @tickets
   end
 
   def show
+    @ticket = Ticket.find(params[:id])
+    authorize @ticket
   end
 
   def new
-    @ticket = current_user.tickets.new
-  end
-
-  def edit
+    @ticket = Ticket.new
+    authorize @ticket
   end
 
   def create
-    @ticket = current_user.tickets.new(ticket_params)
-
+    @ticket = Ticket.new(ticket_params)
+    authorize @ticket
     if @ticket.save
-      redirect_to @ticket, notice: "Ticket was successfully created."
+      redirect_to @ticket
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
+  def edit
+    @ticket = Ticket.find(params[:id])
+    authorize @ticket
+  end
+
   def update
+    @ticket = Ticket.find(params[:id])
+    authorize @ticket
     if @ticket.update(ticket_params)
-      redirect_to @ticket, notice: "Ticket was successfully updated."
+      redirect_to @ticket
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   def destroy
+    @ticket = Ticket.find(params[:id])
+    authorize @ticket
     @ticket.destroy
-    redirect_to tickets_path, notice: "Ticket was successfully deleted."
+    redirect_to tickets_path
   end
 
   private
-
-  def set_ticket
-    @ticket = current_user.tickets.find(params[:id])
-  end
-
   def ticket_params
     params.require(:ticket).permit(:title, :description, :status, :priority)
   end
 end
-
