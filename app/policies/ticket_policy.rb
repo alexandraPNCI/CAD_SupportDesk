@@ -21,8 +21,11 @@ class TicketPolicy < ApplicationPolicy
   end
 
   class Scope < Scope
-    def resolve
-      scope.all   # or scope.where(user: user) if you want user-specific tickets
+  def resolve
+    if user.role_admin?
+      scope.all               # Admin sees everything
+    else
+      scope.where(user: user) # Regular users see only their own tickets
     end
   end
 end

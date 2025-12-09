@@ -1,10 +1,10 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_ticket!, only: [:edit, :update, :destroy]
 
   def index
-    @tickets = policy_scope(Ticket)
-    authorize Ticket
+    @tickets = policy_scope(Ticket)  # ✅ FIXED: only show allowed tickets
   end
 
   def show
@@ -53,8 +53,13 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:id])
   end
 
+  def authorize_ticket!
+    authorize @ticket
+  end
+
   def ticket_params
     params.require(:ticket).permit(:title, :description, :status, :priority)
   end
 end
+
 
