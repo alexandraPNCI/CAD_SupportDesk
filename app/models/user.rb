@@ -3,11 +3,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # Pundit roles
-  enum role: {
-    user: "user",
-    admin: "admin"
-  }
+ enum :role, {
+  user: "user",
+  admin: "admin"
+}, prefix: true
+
 
   # Default role
   after_initialize do
