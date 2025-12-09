@@ -1,0 +1,22 @@
+<% content_for :title, "Edit Ticket" %>
+
+<div class="container mt-5">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">Edit Ticket</h1>
+
+    <div>
+      <%= link_to "Back to Tickets", tickets_path, class: "btn btn-outline-secondary me-2" %>
+      <%= link_to "View Ticket", @ticket, class: "btn btn-outline-primary" %>
+    </div>
+  </div>
+
+  <!-- Edit Form Card -->
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <%= render "form", ticket: @ticket %>
+    </div>
+  </div>
+
+</div>

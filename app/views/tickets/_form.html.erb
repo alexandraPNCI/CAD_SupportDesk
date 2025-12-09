@@ -1,0 +1,38 @@
+<%= form_with(model: ticket, class: "card p-4 shadow-sm") do |form| %>
+
+  <% if ticket.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(ticket.errors.count, "error") %> prevented this ticket from being saved:</h4>
+      <ul>
+        <% ticket.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
+    <%= form.text_field :status, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :priority, class: "form-label" %>
+    <%= form.text_field :priority, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Save Ticket", class: "btn btn-primary" %>
+
+<% end %>
+
+

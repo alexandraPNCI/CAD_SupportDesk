@@ -1,0 +1,21 @@
+<h1 class="mb-4">My Tickets</h1>
+
+<%= link_to "Create New Ticket", new_ticket_path, class: "btn btn-success mb-3" %>
+
+<% if @tickets.present? %>
+  <div class="row">
+    <% @tickets.each do |ticket| %>
+      <div class="col-md-6">
+        <%= render partial: "ticket", locals: { ticket: ticket } %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="alert alert-info">
+    You have no tickets yet.
+  </div>
+<% end %>
+
+
+
+

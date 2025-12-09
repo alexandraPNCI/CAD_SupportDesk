@@ -1,0 +1,81 @@
+<div class="container mt-5">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold"><%= @ticket.title %></h1>
+    <%= link_to "Back to Tickets", tickets_path, class: "btn btn-outline-secondary" %>
+  </div>
+
+  <!-- Ticket Details Card -->
+  <div class="card shadow-lg mb-4">
+    <div class="card-body">
+
+      <!-- Description -->
+      <h5 class="fw-semibold">Description</h5>
+      <p class="text-muted"><%= @ticket.description %></p>
+
+      <hr>
+
+      <!-- Status + Priority -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <p><strong>Status:</strong>
+            <span class="badge bg-primary"><%= @ticket.status %></span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Priority:</strong>
+            <span class="badge bg-warning text-dark"><%= @ticket.priority %></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Timestamps -->
+      <p class="text-muted small">
+        Created: <%= @ticket.created_at.strftime("%b %d, %Y %H:%M") %><br>
+        Updated: <%= @ticket.updated_at.strftime("%b %d, %Y %H:%M") %>
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="d-flex gap-2 mt-4">
+        <%= link_to "Edit Ticket", edit_ticket_path(@ticket), class: "btn btn-primary" %>
+        <%= button_to "Delete Ticket", @ticket, method: :delete, class: "btn btn-danger",
+              data: { confirm: "Are you sure you want to delete this ticket?" } %>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMENTS SECTION (recommended!) -->
+  <% if @ticket.comments.any? %>
+    <h3 class="mb-3">Comments</h3>
+
+    <% @ticket.comments.each do |comment| %>
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <p><%= comment.body %></p>
+          <p class="text-muted small">
+            By <%= comment.user.email %> • <%= time_ago_in_words(comment.created_at) %> ago
+          </p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <!-- Add New Comment -->
+  <div class="card shadow-sm mt-4">
+    <div class="card-body">
+      <h5>Add a Comment</h5>
+
+      <%= form_with(model: [@ticket, Comment.new]) do |f| %>
+        <div class="mb-3">
+          <%= f.text_area :body, class: "form-control", placeholder: "Write a comment…" %>
+        </div>
+        <%= f.submit "Post Comment", class: "btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+    

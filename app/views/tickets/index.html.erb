@@ -1,0 +1,15 @@
+<h1>Tickets</h1>
+<p>This page is rendering correctly!</p>
+
+<%= link_to "New Ticket", new_ticket_path, class: "btn btn-success" %>
+
+<% if @tickets.present? %>
+  <% @tickets.each do |ticket| %>
+    <div class="card shadow-sm mt-3 p-3">
+      <h5><%= ticket.title %></h5>
+      <p><%= ticket.description %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>No tickets found.</p>
+<% end %>
