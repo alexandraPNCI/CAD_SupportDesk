@@ -1,5 +1,9 @@
 class TicketPolicy < ApplicationPolicy
 
+  def index?
+    user.present?   # allow logged-in users to view their tickets
+  end
+
   def show?
     true
   end
@@ -18,8 +22,9 @@ class TicketPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all
+      scope.all   # or scope.where(user: user) if you want user-specific tickets
     end
   end
 end
+
 
