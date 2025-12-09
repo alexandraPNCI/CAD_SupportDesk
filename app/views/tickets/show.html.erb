@@ -36,6 +36,16 @@
         Updated: <%= @ticket.updated_at.strftime("%b %d, %Y %H:%M") %>
       </p>
 
+      <% if policy(@ticket).update? %>
+  <%= link_to "Edit Ticket", edit_ticket_path(@ticket), class: "btn btn-primary" %>
+<% end %>
+
+<% if policy(@ticket).destroy? %>
+  <%= button_to "Delete Ticket", @ticket, method: :delete, class: "btn btn-danger",
+        data: { confirm: "Are you sure you want to delete this ticket?" } %>
+<% end %>
+
+
       <!-- Action Buttons -->
       <div class="d-flex gap-2 mt-4">
 
