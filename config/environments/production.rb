@@ -39,7 +39,5 @@ Rails.application.configure do
 
   config.active_record.attributes_for_inspect = [:id]
 
-  # Disable Solid Cache — FIXES Render crash
-  config.active_record.solid_cache = false
 end
 
