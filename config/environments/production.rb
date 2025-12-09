@@ -87,3 +87,7 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
+
+# Disable Solid Cache in production
+config.load_defaults 7.1
+config.active_record.solid_cache = false
