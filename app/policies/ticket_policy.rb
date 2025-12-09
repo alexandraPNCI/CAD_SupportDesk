@@ -1,21 +1,25 @@
 class TicketPolicy < ApplicationPolicy
-  def index?
-    true
-  end
 
   def show?
     true
   end
 
   def create?
-    user.present?   # any logged-in user can create
+    user.present?
   end
 
   def update?
-    user.admin?     # only admins can edit
+    user.role_admin?
   end
 
   def destroy?
-    user.admin?     # only admins can delete
+    user.role_admin?
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.all
+    end
   end
 end
+
