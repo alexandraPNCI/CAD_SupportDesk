@@ -5,12 +5,10 @@ class TicketsController < ApplicationController
   before_action :authorize_ticket!, only: [:edit, :update, :destroy]
 
   def index
-    @tickets = Ticket.all
-    authorize @tickets
+    @tickets = policy_scope(Ticket)
   end
 
   def show
-    @ticket = Ticket.find(params[:id])
     authorize @ticket
   end
 
@@ -21,42 +19,46 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(ticket_params)
+    @ticket.user = current_user  # FIX: assign current user
     authorize @ticket
+
     if @ticket.save
-      redirect_to @ticket
+      redirect_to @ticket, notice: "Ticket was created successfully."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @ticket = Ticket.find(params[:id])
     authorize @ticket
   end
 
   def update
-    @ticket = Ticket.find(params[:id])
     authorize @ticket
     if @ticket.update(ticket_params)
-      redirect_to @ticket
+      redirect_to @ticket, notice: "Ticket was updated successfully."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @ticket = Ticket.find(params[:id])
     authorize @ticket
     @ticket.destroy
-    redirect_to tickets_path
+    redirect_to tickets_path, notice: "Ticket was deleted."
   end
 
   private
+
+  def set_ticket
+    @ticket = Ticket.find(params[:id])
+  end
+
+  def authorize_ticket!
+    authorize @ticket
+  end
+
   def ticket_params
     params.require(:ticket).permit(:title, :description, :status, :priority)
   end
-end
-
-def authorize_ticket!
-  authorize @ticket
 end
