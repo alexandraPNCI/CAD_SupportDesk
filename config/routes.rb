@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  # Redirect root depending on authentication status
-  authenticated :user, ->(u) { u.present? } do
+  # Authentication-based root routing (Rails 8 compatible)
+  authenticated :user do
     root "tickets#index", as: :authenticated_root
   end
 
@@ -14,4 +14,3 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
   end
 end
-
