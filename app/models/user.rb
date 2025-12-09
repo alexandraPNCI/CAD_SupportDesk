@@ -1,13 +1,20 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Devise modules
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-         has_many :tickets, dependent: :destroy
+  # Pundit roles
+  enum role: {
+    user: "user",
+    admin: "admin"
+  }
 
+  # Default role
+  after_initialize do
+    self.role ||= "user"
+  end
+
+  # Associations if any
+  has_many :comments, dependent: :destroy
 end
 
-class User < ApplicationRecord
-  enum role: { user: "user", admin: "admin" }, _default: "user"
-end
