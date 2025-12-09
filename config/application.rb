@@ -10,6 +10,13 @@ module SupportDesk
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # Disable Solid Cache / Queue / Cable databases (Rails 8 feature)
+    config.active_record.databases = {
+      production: {
+        primary: {}
+      }
+    }
+
     # For Propshaft (Rails 7+ default asset pipeline)
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
     
@@ -22,4 +29,5 @@ module SupportDesk
     # Additional configuration...
   end
 end
+
 
