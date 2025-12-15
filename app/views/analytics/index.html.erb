@@ -1,0 +1,22 @@
+<h1>Ticket Analytics Dashboard</h1>
+
+<div class="card p-3 mb-3">
+  <h4>Total Tickets:</h4>
+  <pre><%= @total_tickets %></pre>
+</div>
+
+<div class="card p-3 mb-3">
+  <h4>Average Ticket Age:</h4>
+  <pre><%= @average_ticket_age %> days</pre>
+</div>
+
+<div class="card p-3 mb-3">
+  <h4>Tickets by Priority</h4>
+  <ul>
+  <% @tickets_by_priority.each do |priority, count| %>
+    <li><strong><%= priority.capitalize %></strong>: <%= count %></li>
+  <% end %>
+</ul>
+
+</div>
+

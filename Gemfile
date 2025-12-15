@@ -41,7 +41,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+#gem "image_processing", "~> 1.2"
 
 # Add Bootstrap for styling
 
@@ -74,3 +74,14 @@ group :production do
   gem "pg"
 end
 
+group :development, :test do
+  gem "rspec-rails", "~> 5.1"
+end
+
+gem "fiddle"
+
+group :test do
+  gem "pundit-matchers"
+end
+
+gem "groupdate"

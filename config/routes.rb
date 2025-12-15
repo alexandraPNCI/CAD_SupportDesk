@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       root to: "devise/sessions#new", as: :unauthenticated_root
     end
   end
+  # ------------------------------------------------------------
+  
+  get "analytics", to: "analytics#index"
 
   # ------------------------------------------------------------
   # Ticket system (includes comment create + destroy routes)

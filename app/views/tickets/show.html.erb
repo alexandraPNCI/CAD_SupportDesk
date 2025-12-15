@@ -1,3 +1,11 @@
+<% if current_user.role == "admin" %>
+  <div class="mb-3">
+    <%= link_to "Analytics Dashboard",
+        analytics_path,
+        class: "btn btn-primary" %>
+  </div>
+<% end %>
+
 <!-- Edit / Delete Ticket Buttons (ALWAYS visible when authorized) -->
 <div class="mb-3">
   <% if policy(@ticket).update? %>
