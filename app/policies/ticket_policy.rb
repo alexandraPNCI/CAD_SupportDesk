@@ -1,11 +1,7 @@
 class TicketPolicy < ApplicationPolicy
 
-  def index?
-    true
-  end
-
   def show?
-    user.role_admin? || record.user_id == user.id
+    true
   end
 
   def create?
@@ -13,24 +9,21 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def update?
-    user.role_admin? || record.user_id == user.id
+    user.role == "admin"
   end
 
   def destroy?
-    user.role_admin? || record.user_id == user.id
+    user.role == "admin"
   end
 
   class Scope < Scope
     def resolve
-      if user.role_admin?
+      if user.role == "admin"
         scope.all
       else
-        scope.where(user_id: user.id)
+        scope.where(user: user)
       end
     end
   end
-
 end
-
-
 

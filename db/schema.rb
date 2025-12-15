@@ -10,13 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_11_222036) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_09_232822) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "comments", force: :cascade do |t|
-    t.text "body"
+    t.string "author_name"
+    t.text "content"
     t.datetime "created_at", null: false
-    t.integer "ticket_id", null: false
+    t.bigint "ticket_id", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -26,7 +32,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_11_222036) do
     t.string "status"
     t.string "title"
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
@@ -37,11 +43,13 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_11_222036) do
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.string "role", default: "user"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "comments", "tickets"
+  add_foreign_key "comments", "users"
   add_foreign_key "tickets", "users"
 end

@@ -1,18 +1,21 @@
-<h1>Tickets</h1>
-<p>This page is rendering correctly!</p>
+<h1 class="mb-4">My Tickets</h1>
 
-<%= link_to "New Ticket", new_ticket_path, class: "btn btn-success" %>
+<%= link_to "Create New Ticket", new_ticket_path, class: "btn btn-success mb-3" %>
 
 <% if @tickets.present? %>
-  <% @tickets.each do |ticket| %>
-    <div class="card shadow-sm mt-3 p-3">
-      <h5><%= ticket.title %></h5>
-      <p><%= ticket.description %></p>
-    </div>
-  <% end %>
+  <div class="row">
+    <% @tickets.each do |ticket| %>
+      <div class="col-md-6">
+        <%= render partial: "ticket", locals: { ticket: ticket } %>
+      </div>
+    <% end %>
+  </div>
 <% else %>
-  <p>No tickets found.</p>
+  <div class="alert alert-info">
+    You have no tickets yet.
+  </div>
 <% end %>
+
 
 
 

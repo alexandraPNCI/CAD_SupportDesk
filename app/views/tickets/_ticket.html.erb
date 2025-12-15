@@ -1,21 +1,24 @@
-<h1 class="mb-4">My Tickets</h1>
+<div class="card shadow-sm mt-3 p-3">
 
-<%= link_to "Create New Ticket", new_ticket_path, class: "btn btn-success mb-3" %>
+  <h5><%= ticket.title %></h5>
+  <p><%= ticket.description %></p>
 
-<% if @tickets.present? %>
-  <div class="row">
-    <% @tickets.each do |ticket| %>
-      <div class="col-md-6">
-        <%= render partial: "ticket", locals: { ticket: ticket } %>
-      </div>
+  <div class="mt-2 d-flex gap-2">
+
+    <% if policy(ticket).update? %>
+      <%= link_to "Edit",
+          edit_ticket_path(ticket),
+          class: "btn btn-sm btn-warning" %>
     <% end %>
+
+    <% if policy(ticket).destroy? %>
+      <%= button_to "Delete",
+          ticket_path(ticket),
+          method: :delete,
+          class: "btn btn-sm btn-danger",
+          data: { confirm: "Delete this ticket?" } %>
+    <% end %>
+
   </div>
-<% else %>
-  <div class="alert alert-info">
-    You have no tickets yet.
-  </div>
-<% end %>
-
-
-
+</div>
 

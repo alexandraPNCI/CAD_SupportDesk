@@ -8,6 +8,9 @@ class User < ApplicationRecord
   admin: "admin"
 }, prefix: true
 
+def role_admin?
+  role == "admin"
+end
 
   # Default role
   after_initialize do

@@ -4,7 +4,7 @@ class TicketsController < ApplicationController
   before_action :authorize_ticket!, only: [:edit, :update, :destroy]
 
   def index
-    @tickets = policy_scope(Ticket)  # ✅ FIXED: only show allowed tickets
+    @tickets = policy_scope(Ticket)
   end
 
   def show
@@ -34,8 +34,9 @@ class TicketsController < ApplicationController
 
   def update
     authorize @ticket
+
     if @ticket.update(ticket_params)
-      redirect_to @ticket, notice: "Ticket was updated successfully."
+      redirect_to @ticket, notice: "Ticket updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +45,7 @@ class TicketsController < ApplicationController
   def destroy
     authorize @ticket
     @ticket.destroy
-    redirect_to tickets_path, notice: "Ticket was deleted."
+    redirect_to tickets_path, notice: "Ticket deleted."
   end
 
   private
@@ -61,5 +62,3 @@ class TicketsController < ApplicationController
     params.require(:ticket).permit(:title, :description, :status, :priority)
   end
 end
-
-

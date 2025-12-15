@@ -4,9 +4,9 @@ class CommentsController < ApplicationController
   def create
     @ticket = Ticket.find(params[:ticket_id])
     @comment = @ticket.comments.build(comment_params)
-    @comment.user = current_user    # assign user to comment
+    @comment.user = current_user
 
-    authorize @comment              # Pundit authorization
+    authorize @comment
 
     if @comment.save
       redirect_to @ticket, notice: "Comment added."
@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
     @ticket = Ticket.find(params[:ticket_id])
     @comment = @ticket.comments.find(params[:id])
 
-    authorize @comment              # Pundit authorization
+    authorize @comment
 
     @comment.destroy
     redirect_to @ticket, notice: "Comment deleted."
@@ -28,9 +28,11 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body)
+    params.require(:comment).permit(:content)
   end
 end
+
+
 
 
 
