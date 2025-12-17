@@ -15,3 +15,8 @@ User.create!(
 )
 
 
+admin = User.find_or_initialize_by(email: "admin@example.com")
+admin.password = "password123"
+admin.password_confirmation = "password123"
+admin.role = "admin"
+admin.save!
